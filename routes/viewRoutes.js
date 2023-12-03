@@ -8,6 +8,8 @@ const router = express.Router();
 //   res.status(200).render('base', {});
 // });
 
+router.use(viewsController.alerts);
+
 router.get(
   '/',
   // bookingController.createBookingCheckout,
