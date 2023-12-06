@@ -37,7 +37,6 @@ const createSendToken = (user, statusCode, req, res) => {
 exports.signup = catchAsync(async (req, res, next) => {
   // This Line is Security Breach!
   // const newUser = await User.create(req.body);
-
   //This is more secure
   const newUser = await User.create({
     name: req.body.name,
@@ -48,7 +47,11 @@ exports.signup = catchAsync(async (req, res, next) => {
   });
   const url = `${req.protocol}://${req.get('host')}/me`;
   // console.log(url);
-  await new Email(newUser, url).sendWelcome();
+  try {
+    await new Email(newUser, url).sendWelcome();
+  } catch (err) {
+    console.log(err);
+  }
   createSendToken(newUser, 201, req, res);
 });
 
